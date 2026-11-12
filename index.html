@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f2e9">
+  <meta name="description" content="Meet the game everyone's talking about. Learn pickleball, find your people, and get out on court.">
+  <title>Pickleball Club — Find Your Rally</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172832;
+      --muted: #61737c;
+      --paper: #f5f2e9;
+      --blue: #a4e7f2;
+      --blue-dark: #173c52;
+      --orange: #f2784b;
+      --line: rgba(23, 40, 50, .16);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Arial", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
+
+    header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -.05em;
+    }
+    .brand-mark {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      font-size: 18px;
+    }
+    nav { display: flex; align-items: center; gap: 34px; }
+    nav a {
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    nav a:not(.nav-cta):hover { opacity: .6; }
+    .nav-cta, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 99px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .nav-cta { padding: 13px 19px; background: var(--ink); color: white; }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
+
+    .hero {
+      min-height: 610px;
+      padding-block: 72px 78px;
+      display: grid;
+      grid-template-columns: 1fr 1.03fr;
+      align-items: center;
+      gap: 48px;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--orange); }
+    h1 {
+      max-width: 550px;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(58px, 7.3vw, 100px);
+      font-weight: 400;
+      letter-spacing: -.075em;
+      line-height: .91;
+    }
+    h1 em { color: #397f9d; font-weight: 400; }
+    .hero-copy {
+      max-width: 370px;
+      margin: 25px 0 27px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 21px; }
+    .button { padding: 16px 21px; background: var(--blue); font-size: 12px; }
+    .text-link { font-size: 12px; font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    .hero-note { display: flex; align-items: center; gap: 9px; margin-top: 42px; color: var(--muted); font-size: 10px; }
+    .avatars { display: flex; padding-left: 4px; }
+    .avatar {
+      width: 25px; height: 25px; margin-left: -4px;
+      display: grid; place-items: center; border: 2px solid var(--paper);
+      border-radius: 50%; background: #e9bd9a; font-size: 12px;
+    }
+    .avatar:nth-child(2) { background: #a9d8e7; }
+    .avatar:nth-child(3) { background: #d7a4a0; }
+    .avatar:nth-child(4) { background: #e5cb72; }
+
+    .court-art {
+      position: relative;
+      height: 435px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #5e9fbd;
+      isolation: isolate;
+    }
+    .court-art::before {
+      position: absolute;
+      content: "";
+      inset: -23% -20%;
+      z-index: -1;
+      background: repeating-linear-gradient(110deg, transparent 0 85px, rgba(247, 247, 219, .12) 86px 88px);
+      transform: rotate(-8deg);
+    }
+    .court {
+      position: absolute;
+      width: 73%;
+      height: 81%;
+      left: 13.5%;
+      top: 9%;
+      border: 3px solid rgba(255,255,255,.92);
+      background:
+        linear-gradient(90deg, transparent 49.6%, rgba(255,255,255,.92) 49.6% 50.4%, transparent 50.4%),
+        linear-gradient(0deg, transparent 49.6%, rgba(255,255,255,.92) 49.6% 50.4%, transparent 50.4%),
+        linear-gradient(0deg, transparent 24.7%, rgba(255,255,255,.92) 24.7% 25.3%, transparent 25.3%),
+        linear-gradient(0deg, transparent 74.7%, rgba(255,255,255,.92) 74.7% 75.3%, transparent 75.3%),
+        #397f9d;
+      box-shadow: 0 18px 38px rgba(24, 66, 87, .22);
+      transform: rotate(-8deg);
+    }
+    .net {
+      position: absolute; z-index: 1; left: 12%; right: 12%; top: 49%;
+      height: 8px; border-block: 2px solid rgba(255,255,255,.85);
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,.65) 0 1px, transparent 1px 9px);
+      transform: rotate(-8deg);
+    }
+    .ball {
+      position: absolute; z-index: 2; top: 29%; left: 52%;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--blue);
+      box-shadow: inset -8px -8px 0 rgba(42, 105, 130, .12), 0 12px 24px rgba(24, 66, 87, .24);
+    }
+    .ball::before, .ball::after {
+      position: absolute; content: ""; width: 7px; height: 7px; border-radius: 50%;
+      background: #397f9d; box-shadow: 15px 4px #397f9d, 29px -3px #397f9d, 8px 20px #397f9d, 25px 24px #397f9d;
+    }
+    .ball::before { left: 9px; top: 14px; }
+    .ball::after { left: 16px; top: 39px; }
+    .art-label {
+      position: absolute; z-index: 3; left: 22px; bottom: 20px;
+      padding: 9px 13px; border-radius: 99px;
+      background: rgba(245,242,233,.92); font-size: 9px; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    .art-number {
+      position: absolute; z-index: 3; right: 23px; top: 20px;
+      color: rgba(255,255,255,.9); font-family: var(--serif); font-size: 12px;
+    }
+
+    .ticker { overflow: hidden; background: var(--blue); }
+    .ticker-inner {
+      min-height: 69px; display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; white-space: nowrap;
+    }
+    .ticker span { font-size: 10px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .ticker b { font-size: 17px; font-weight: 400; }
+
+    .intro {
+      padding-block: 105px 98px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    }
+    .section-label { margin: 0 0 15px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h2 { margin: 0; font-family: var(--serif); font-size: clamp(39px, 5vw, 62px); font-weight: 400; letter-spacing: -.055em; line-height: 1.02; }
+    .intro-right { padding-top: 35px; }
+    .intro-right p { max-width: 430px; margin: 0 0 23px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .intro-right p strong { color: var(--ink); }
+
+    .steps { padding-block: 78px 90px; background: #eae7dd; }
+    .steps-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 45px; }
+    .steps-heading h2 { max-width: 480px; }
+    .steps-heading > p { max-width: 255px; margin: 0 0 5px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+    .step { padding: 24px 25px 0 0; }
+    .step + .step { padding-left: 25px; border-left: 1px solid var(--line); }
+    .step-num { color: #71838b; font-family: var(--serif); font-size: 14px; }
+    .step h3 { margin: 36px 0 10px; font-family: var(--serif); font-size: 25px; font-weight: 400; letter-spacing: -.03em; }
+    .step p { max-width: 265px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+
+    .cta {
+      position: relative; overflow: hidden; padding-block: 75px;
+      color: white; background: var(--blue-dark);
+    }
+    .cta::after {
+      position: absolute; content: ""; width: 340px; height: 340px; right: 9%; top: -190px;
+      border: 1px solid rgba(164,231,242,.25); border-radius: 50%;
+      box-shadow: 0 0 0 35px rgba(164,231,242,.035), 0 0 0 70px rgba(164,231,242,.035);
+    }
+    .cta-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 30px; }
+    .cta .section-label { color: #b7d1dc; }
+    .cta h2 { max-width: 550px; font-size: clamp(40px, 5vw, 62px); }
+    .cta .button { flex: 0 0 auto; color: var(--ink); }
+    footer { padding-block: 24px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    footer small { color: var(--muted); font-size: 10px; }
+    .footer-links { display: flex; gap: 19px; }
+    .footer-links a { color: var(--muted); font-size: 10px; text-decoration: none; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 38px, 540px); }
+      header { height: 70px; }
+      nav { gap: 16px; }
+      nav a:not(.nav-cta) { display: none; }
+      .nav-cta { padding: 11px 15px; font-size: 11px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 58px 50px; }
+      h1 { font-size: clamp(62px, 15vw, 88px); }
+      .court-art { height: min(72vw, 385px); }
+      .ticker-inner { justify-content: flex-start; gap: 23px; min-height: 59px; }
+      .ticker-inner span { font-size: 9px; }
+      .ticker-inner span:nth-of-type(even), .ticker-inner b:nth-of-type(even) { display: none; }
+      .intro { grid-template-columns: 1fr; gap: 13px; padding-block: 72px; }
+      .intro-right { padding-top: 8px; }
+      .steps { padding-block: 66px; }
+      .steps-heading { display: block; margin-bottom: 32px; }
+      .steps-heading > p { margin-top: 18px; }
+      .step-grid { grid-template-columns: 1fr; }
+      .step, .step + .step { display: grid; grid-template-columns: 40px 1fr; column-gap: 12px; padding: 21px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+      .step-num { grid-row: span 2; }
+      .step h3 { margin: 0 0 6px; font-size: 22px; }
+      .step p { max-width: none; }
+      .cta { padding-block: 60px; }
+      .cta-inner { align-items: flex-start; flex-direction: column; }
+      .cta .button { margin-top: 4px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="brand" href="#" aria-label="Pickleball Club home">
+      <span class="brand-mark" aria-hidden="true">●</span>
+      PICKLEBALL CLUB
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#why-pickleball">The game</a>
+      <a href="#how-to-play">How to play</a>
+      <a class="nav-cta" href="#get-started">Find your court ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">Your new favorite thing</p>
+        <h1 id="hero-title">A little<br>game. A lot<br>of <em>joy.</em></h1>
+        <p class="hero-copy">Part tennis, part badminton, all good times. Pick up a paddle and find out why pickleball brings everyone to the court.</p>
+        <div class="hero-actions">
+          <a class="button" href="#how-to-play">Meet your new game <span aria-hidden="true">&nbsp;↗</span></a>
+          <a class="text-link" href="#why-pickleball">Why pickleball?</a>
+        </div>
+        <div class="hero-note">
+          <span class="avatars" aria-hidden="true"><span class="avatar">☺</span><span class="avatar">☺</span><span class="avatar">☺</span><span class="avatar">☺</span></span>
+          <span>Good people. Great rallies. All levels welcome.</span>
+        </div>
+      </div>
+      <div class="court-art" role="img" aria-label="Illustration of a blue pickleball court and a bright pickleball">
+        <span class="art-number">COURT Nº 01</span>
+        <div class="court"></div>
+        <div class="net"></div>
+        <div class="ball"></div>
+        <span class="art-label">See you out there</span>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Pickleball is for everybody, every body, every level, every day">
+      <div class="wrap ticker-inner">
+        <span>Everybody</span><b>✳</b><span>Every body</span><b>✳</b><span>Every level</span><b>✳</b><span>Every day</span><b>✳</b>
+      </div>
+    </div>
+
+    <section class="intro wrap" id="why-pickleball">
+      <div>
+        <p class="section-label">The best kind of contagious</p>
+        <h2>Easy to learn.<br>Hard to leave.</h2>
+      </div>
+      <div class="intro-right">
+        <p><strong>Pickleball is a paddle sport that borrows the best bits from tennis, badminton, and table tennis.</strong> It's played on a small court with a perforated ball—and has a knack for turning “just one game” into an afternoon.</p>
+        <p>New to the game? Perfect. You can learn the basics in minutes, and the community is always happy to show you the ropes.</p>
+        <a class="text-link" href="#how-to-play">Get the quick-start guide ↓</a>
+      </div>
+    </section>
+
+    <section class="steps" id="how-to-play">
+      <div class="wrap">
+        <div class="steps-heading">
+          <div>
+            <p class="section-label">Three steps to your first rally</p>
+            <h2>That's all it takes<br>to get in the game.</h2>
+          </div>
+          <p>No fancy kit or years of practice required. Just bring a little curiosity and a willingness to have fun.</p>
+        </div>
+        <div class="step-grid">
+          <article class="step">
+            <span class="step-num">01 / Grab a paddle</span>
+            <h3>Borrow or bring</h3>
+            <p>Most courts have paddles to borrow. Wear comfy clothes and court-friendly shoes.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">02 / Learn the basics</span>
+            <h3>Serve underhand</h3>
+            <p>Serve diagonally, let the ball bounce once on each side, then rally away.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">03 / Find your people</span>
+            <h3>Play, laugh, repeat</h3>
+            <p>Join an open-play session near you. Doubles is popular, and beginners are welcome.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="get-started">
+      <div class="wrap cta-inner">
+        <div>
+          <p class="section-label">Your court is calling</p>
+          <h2>Go on. Give it a swing.</h2>
+        </div>
+        <a class="button" href="https://usapickleball.org/play/" target="_blank" rel="noopener noreferrer">Find a place to play ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-inner">
+      <a class="brand" href="#" aria-label="Pickleball Club home">
+        <span class="brand-mark" aria-hidden="true">●</span>
+        PICKLEBALL CLUB
+      </a>
+      <small>Made for the love of the game. Get out and play.</small>
+      <div class="footer-links">
+        <a href="#why-pickleball">The game</a>
+        <a href="#how-to-play">Quick start</a>
+        <a href="#get-started">Find a court</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
